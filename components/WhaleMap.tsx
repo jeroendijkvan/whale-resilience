@@ -10,42 +10,24 @@ const W = 960;
 const H = 480;
 
 const PHOTO: Record<string, string> = {
-  "Azores, Portugal":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/View_of_the_northwest_coast_of_S%C3%A3o_Miguel_%28Azores%29_2011.jpg/480px-View_of_the_northwest_coast_of_S%C3%A3o_Miguel_%28Azores%29_2011.jpg",
-  "Húsavík, Iceland":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/1_h%C3%BAsav%C3%ADk_aerial_panorama_2017.jpg/480px-1_h%C3%BAsav%C3%ADk_aerial_panorama_2017.jpg",
-  "Tromsø, Norway":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Troms%C3%B8_sentrum_%285835702754%29.jpg/480px-Troms%C3%B8_sentrum_%285835702754%29.jpg",
-  "Gulf of Alaska":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/A_lonely_cloud_over_Prince_William_Sound.jpg/480px-A_lonely_cloud_over_Prince_William_Sound.jpg",
-  "Monterey Bay, USA":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Monterey_Bay_Coast_%287161010684%29.jpg/480px-Monterey_Bay_Coast_%287161010684%29.jpg",
-  "Baja California, Mexico":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Mexico_spongy_red_cliffs_on_the_blue_sea_of_cortez%2C_Baja_California_Sur%2C_Mexico.jpg/480px-Mexico_spongy_red_cliffs_on_the_blue_sea_of_cortez%2C_Baja_California_Sur%2C_Mexico.jpg",
-  "Dominica, Caribbean":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Batalie_Bay%2C_Dominica_002.jpg/480px-Batalie_Bay%2C_Dominica_002.jpg",
-  "Peninsula Valdés, Argentina":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Pen%C3%ADnsula_Vald%C3%A9s%2C_panor%C3%A1micas_%281994%29_01.jpg/480px-Pen%C3%ADnsula_Vald%C3%A9s%2C_panor%C3%A1micas_%281994%29_01.jpg",
-  "Hermanus, South Africa":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Hermanus_coast%2C_Western_Cape%2C_South_Africa_%286253247740%29.jpg/480px-Hermanus_coast%2C_Western_Cape%2C_South_Africa_%286253247740%29.jpg",
-  "Mirissa, Sri Lanka":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Mirissa_beach_Sri_Lanka_%2829959458812%29.jpg/480px-Mirissa_beach_Sri_Lanka_%2829959458812%29.jpg",
-  "Kaikoura, New Zealand":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/A_rugged_coastline_Kaikoura_NZ_%2834362897020%29.jpg/480px-A_rugged_coastline_Kaikoura_NZ_%2834362897020%29.jpg",
-  "Tonga, Pacific":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Vava%27u_banner.jpg/480px-Vava%27u_banner.jpg",
-  Antarctica:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Hope_Bay-2016-Trinity_Peninsula%E2%80%93Iceberg.jpg/480px-Hope_Bay-2016-Trinity_Peninsula%E2%80%93Iceberg.jpg",
-  "Vancouver Island, Canada":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Long_beach_-_Tofino_-_Vancouver_Island_01.jpg/480px-Long_beach_-_Tofino_-_Vancouver_Island_01.jpg",
-  "Newfoundland, Canada":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Coastline_St_John_Newfoundland_%2841321604662%29.jpg/480px-Coastline_St_John_Newfoundland_%2841321604662%29.jpg",
-  "Svalbard, Norway":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Panorama_Svalbard_Isfjorden.jpg/480px-Panorama_Svalbard_Isfjorden.jpg",
-  "Ogasawara, Japan":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Ogasawara_Islands_banner.jpg/480px-Ogasawara_Islands_banner.jpg",
-  "Andenes, Norway":
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/And%C3%B8ya_Lighthouse%2C_Vester%C3%A5len_Northern_Norway.jpg/480px-And%C3%B8ya_Lighthouse%2C_Vester%C3%A5len_Northern_Norway.jpg",
+  "Azores, Portugal": "/locations/azores.jpg",
+  "Húsavík, Iceland": "/locations/husavik.jpg",
+  "Tromsø, Norway": "/locations/tromso.jpg",
+  "Gulf of Alaska": "/locations/gulf-of-alaska.jpg",
+  "Monterey Bay, USA": "/locations/monterey-bay.jpg",
+  "Baja California, Mexico": "/locations/baja-california.jpg",
+  "Dominica, Caribbean": "/locations/dominica.jpg",
+  "Peninsula Valdés, Argentina": "/locations/peninsula-valdes.jpg",
+  "Hermanus, South Africa": "/locations/hermanus.jpg",
+  "Mirissa, Sri Lanka": "/locations/mirissa.jpg",
+  "Kaikoura, New Zealand": "/locations/kaikoura.jpg",
+  "Tonga, Pacific": "/locations/tonga.jpg",
+  Antarctica: "/locations/antarctica.jpg",
+  "Vancouver Island, Canada": "/locations/vancouver-island.jpg",
+  "Newfoundland, Canada": "/locations/newfoundland.jpg",
+  "Svalbard, Norway": "/locations/svalbard.jpg",
+  "Ogasawara, Japan": "/locations/ogasawara.jpg",
+  "Andenes, Norway": "/locations/andenes.jpg",
 };
 
 type ProjectedHotspot = {
