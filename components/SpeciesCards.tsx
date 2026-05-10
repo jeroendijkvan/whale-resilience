@@ -1,5 +1,5 @@
 import { SPECIES } from "@/lib/species";
-import { WhaleSilhouette } from "./WhaleSilhouette";
+import { WhaleImage } from "./WhaleImage";
 import Reveal from "./Reveal";
 
 const TREND_LABEL = {
@@ -48,15 +48,14 @@ export default function SpeciesCards() {
                   />
                   <div className="p-6 pb-7">
                     <div
-                      className="h-24 mb-5 flex items-center justify-center"
+                      className="h-32 -mt-2 mb-4 flex items-center justify-center"
                       aria-hidden
                     >
-                      <div
-                        className="w-44 h-20 transition-transform duration-700 group-hover:scale-105"
-                        style={{ filter: `drop-shadow(0 0 24px ${sp.color}22)` }}
-                      >
-                        <WhaleSilhouette kind={sp.kind} color={sp.color} opacity={0.92} />
-                      </div>
+                      <WhaleImage
+                        kind={sp.kind}
+                        className="max-h-32 w-auto transition-transform duration-700 group-hover:scale-[1.06]"
+                        glowColor={sp.color}
+                      />
                     </div>
 
                     <div className="mb-5">

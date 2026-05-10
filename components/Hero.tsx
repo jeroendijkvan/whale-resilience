@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { SPECIES } from "@/lib/species";
-import { WhaleSilhouette } from "./WhaleSilhouette";
+import { WhaleImage } from "./WhaleImage";
 
 export default function Hero() {
   const [speciesIdx, setSpeciesIdx] = useState(0);
@@ -94,8 +94,8 @@ export default function Hero() {
         className="absolute inset-0 flex items-center justify-center pointer-events-none animate-drift"
         aria-hidden
       >
-        <div className="w-[80vw] max-w-[900px] opacity-[0.07]">
-          <WhaleSilhouette kind={sp.kind} color={sp.color} />
+        <div className="w-[80vw] max-w-[1100px] opacity-[0.16] mix-blend-screen">
+          <WhaleImage kind={sp.kind} className="w-full h-auto" />
         </div>
       </div>
 

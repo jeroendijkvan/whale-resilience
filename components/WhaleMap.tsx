@@ -11,41 +11,41 @@ const H = 480;
 
 const PHOTO: Record<string, string> = {
   "Azores, Portugal":
-    "https://images.unsplash.com/photo-1499591934245-40b55745b905?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/View_of_the_northwest_coast_of_S%C3%A3o_Miguel_%28Azores%29_2011.jpg/480px-View_of_the_northwest_coast_of_S%C3%A3o_Miguel_%28Azores%29_2011.jpg",
   "Húsavík, Iceland":
-    "https://images.unsplash.com/photo-1500039436846-25ae2f11882e?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/1_h%C3%BAsav%C3%ADk_aerial_panorama_2017.jpg/480px-1_h%C3%BAsav%C3%ADk_aerial_panorama_2017.jpg",
   "Tromsø, Norway":
-    "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Troms%C3%B8_sentrum_%285835702754%29.jpg/480px-Troms%C3%B8_sentrum_%285835702754%29.jpg",
   "Gulf of Alaska":
-    "https://images.unsplash.com/photo-1516708354817-3a52f0c1f6dc?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/A_lonely_cloud_over_Prince_William_Sound.jpg/480px-A_lonely_cloud_over_Prince_William_Sound.jpg",
   "Monterey Bay, USA":
-    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Monterey_Bay_Coast_%287161010684%29.jpg/480px-Monterey_Bay_Coast_%287161010684%29.jpg",
   "Baja California, Mexico":
-    "https://images.unsplash.com/photo-1530541930197-ff16ac917b0e?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Mexico_spongy_red_cliffs_on_the_blue_sea_of_cortez%2C_Baja_California_Sur%2C_Mexico.jpg/480px-Mexico_spongy_red_cliffs_on_the_blue_sea_of_cortez%2C_Baja_California_Sur%2C_Mexico.jpg",
   "Dominica, Caribbean":
-    "https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Batalie_Bay%2C_Dominica_002.jpg/480px-Batalie_Bay%2C_Dominica_002.jpg",
   "Peninsula Valdés, Argentina":
-    "https://images.unsplash.com/photo-1551405780-03882d5a2ba7?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Pen%C3%ADnsula_Vald%C3%A9s%2C_panor%C3%A1micas_%281994%29_01.jpg/480px-Pen%C3%ADnsula_Vald%C3%A9s%2C_panor%C3%A1micas_%281994%29_01.jpg",
   "Hermanus, South Africa":
-    "https://images.unsplash.com/photo-1580674684089-5c8b7eb2bb6b?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Hermanus_coast%2C_Western_Cape%2C_South_Africa_%286253247740%29.jpg/480px-Hermanus_coast%2C_Western_Cape%2C_South_Africa_%286253247740%29.jpg",
   "Mirissa, Sri Lanka":
-    "https://images.unsplash.com/photo-1546484958-a947ed1b3afb?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Mirissa_beach_Sri_Lanka_%2829959458812%29.jpg/480px-Mirissa_beach_Sri_Lanka_%2829959458812%29.jpg",
   "Kaikoura, New Zealand":
-    "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/A_rugged_coastline_Kaikoura_NZ_%2834362897020%29.jpg/480px-A_rugged_coastline_Kaikoura_NZ_%2834362897020%29.jpg",
   "Tonga, Pacific":
-    "https://images.unsplash.com/photo-1551918120-9739cb430c6d?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Vava%27u_banner.jpg/480px-Vava%27u_banner.jpg",
   Antarctica:
-    "https://images.unsplash.com/photo-1551655510-555dc3be8633?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Hope_Bay-2016-Trinity_Peninsula%E2%80%93Iceberg.jpg/480px-Hope_Bay-2016-Trinity_Peninsula%E2%80%93Iceberg.jpg",
   "Vancouver Island, Canada":
-    "https://images.unsplash.com/photo-1502780402662-acc01917cf6f?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Long_beach_-_Tofino_-_Vancouver_Island_01.jpg/480px-Long_beach_-_Tofino_-_Vancouver_Island_01.jpg",
   "Newfoundland, Canada":
-    "https://images.unsplash.com/photo-1505765050516-f72dcac9c60b?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Coastline_St_John_Newfoundland_%2841321604662%29.jpg/480px-Coastline_St_John_Newfoundland_%2841321604662%29.jpg",
   "Svalbard, Norway":
-    "https://images.unsplash.com/photo-1531176175280-33e81d4a7a48?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Panorama_Svalbard_Isfjorden.jpg/480px-Panorama_Svalbard_Isfjorden.jpg",
   "Ogasawara, Japan":
-    "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Ogasawara_Islands_banner.jpg/480px-Ogasawara_Islands_banner.jpg",
   "Andenes, Norway":
-    "https://images.unsplash.com/photo-1527525443983-6e60c75fff46?w=480&h=300&fit=crop&q=70",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/And%C3%B8ya_Lighthouse%2C_Vester%C3%A5len_Northern_Norway.jpg/480px-And%C3%B8ya_Lighthouse%2C_Vester%C3%A5len_Northern_Norway.jpg",
 };
 
 type ProjectedHotspot = {
