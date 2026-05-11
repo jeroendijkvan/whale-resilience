@@ -308,6 +308,7 @@ export default function PopulationChart() {
       ctx.font = "400 9px Inter,system-ui,sans-serif";
       ctx.textAlign = "center";
       ctx.fillStyle = "rgba(200,200,200,.22)";
+      // Upper row of axis annotations — anchored to the firstObs dashed line.
       ctx.fillText("← modelled", firstObsX - 42, PT - 22);
       ctx.fillText("survey-based →", firstObsX + 52, PT - 22);
 
@@ -398,8 +399,10 @@ export default function PopulationChart() {
       });
 
       const morX = xOf(YEARS.indexOf(1986));
+      // Line starts just below the moratorium label so the dashes never run
+      // through the text.
       ctx.beginPath();
-      ctx.moveTo(morX, PT - 16);
+      ctx.moveTo(morX, PT - 4);
       ctx.lineTo(morX, PT + CH);
       ctx.strokeStyle = "rgba(255,225,80,.22)";
       ctx.lineWidth = 1;
@@ -407,9 +410,12 @@ export default function PopulationChart() {
       ctx.stroke();
       ctx.setLineDash([]);
       ctx.font = "400 9px Inter,system-ui,sans-serif";
-      ctx.fillStyle = "rgba(255,225,80,.55)";
+      ctx.fillStyle = "rgba(255,225,80,.65)";
       ctx.textAlign = "center";
-      ctx.fillText("IWC moratorium 1986", morX, PT - 19);
+      // Lower annotation row, sits below the modelled/survey labels with a
+      // ~14px vertical gap so the two never collide regardless of how close
+      // 1986 sits to the survey-data boundary.
+      ctx.fillText("IWC moratorium 1986", morX, PT - 8);
 
       [1900, 1920, 1940, 1960, 1980, 2000, 2020, 2024].forEach((y) => {
         const i = YEARS.indexOf(y);
