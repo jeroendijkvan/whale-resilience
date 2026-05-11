@@ -234,10 +234,10 @@ export default function PopulationChart() {
 
     function drawBg() {
       bgx.clearRect(0, 0, W, H);
-      bgx.fillStyle = "#03091a";
+      bgx.fillStyle = "#0c1a2e";
       bgx.fillRect(0, 0, W, H);
       for (let row = 0; row < H; row++) {
-        bgx.fillStyle = `rgba(0,40,80,${0.02 + (row / H) * 0.036})`;
+        bgx.fillStyle = `rgba(20,60,110,${0.02 + (row / H) * 0.032})`;
         bgx.fillRect(0, row, W, 1);
       }
       stars.forEach((s) => {
@@ -257,7 +257,9 @@ export default function PopulationChart() {
       ft += 0.011;
 
       fish.forEach((f) => {
-        f.x += f.flip ? -f.sp * 0.5 : f.sp * 0.5;
+        // Tail is drawn on the +x side, so head is on -x. To swim head-first,
+        // unflipped fish move left (-x) and flipped fish (mirrored) move right.
+        f.x += f.flip ? f.sp * 0.5 : -f.sp * 0.5;
         if (f.x > W + 30) f.x = -30;
         if (f.x < -30) f.x = W + 30;
         ctx.save();
