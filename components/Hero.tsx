@@ -2,11 +2,49 @@
 
 import { useEffect, useRef, useState } from "react";
 import { SPECIES } from "@/lib/species";
-import { WhaleImage } from "./WhaleImage";
+
+const CLIPS = [
+  { src: "/videos/img_2670.mp4", poster: "/videos/img_2670.jpg" },
+  { src: "/videos/img_2681.mp4", poster: "/videos/img_2681.jpg" },
+  { src: "/videos/img_2685.mp4", poster: "/videos/img_2685.jpg" },
+] as const;
+
+type Clip = (typeof CLIPS)[number];
+
+const FADE_MS = 1400;
+
+function shuffle<T>(arr: readonly T[]): T[] {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+type Slots = { a: Clip; b: Clip; active: "a" | "b" };
 
 export default function Hero() {
   const [speciesIdx, setSpeciesIdx] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Videos are client-only: shuffled order would mismatch SSR, and we don't need
+  // them in the initial HTML. The dark section background stands in until mount.
+  const orderRef = useRef<readonly Clip[]>(CLIPS);
+  const cursor = useRef(0);
+  const [slots, setSlots] = useState<Slots | null>(null);
+  const refA = useRef<HTMLVideoElement>(null);
+  const refB = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const shuffled = shuffle(CLIPS);
+    orderRef.current = shuffled;
+    setSlots({
+      a: shuffled[0],
+      b: shuffled[1 % shuffled.length],
+      active: "a",
+    });
+  }, []);
 
   useEffect(() => {
     const id = setInterval(
@@ -16,6 +54,32 @@ export default function Hero() {
     return () => clearInterval(id);
   }, []);
 
+  // Whenever the active slot changes, play that one from the start.
+  // The just-finished video stays visible at its last frame and fades out.
+  useEffect(() => {
+    if (!slots) return;
+    const el = slots.active === "a" ? refA.current : refB.current;
+    if (el) {
+      try {
+        el.currentTime = 0;
+      } catch {
+        /* metadata may not be ready on first render; play() will still start */
+      }
+      el.play().catch(() => {
+        /* autoplay may be blocked — poster still shows */
+      });
+    }
+  }, [slots?.active]);
+
+  // When a slot's src is swapped (always while hidden), reload the element.
+  useEffect(() => {
+    refA.current?.load();
+  }, [slots?.a.src]);
+  useEffect(() => {
+    refB.current?.load();
+  }, [slots?.b.src]);
+
+  // Ambient particles, drifting across the surface.
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -71,39 +135,91 @@ export default function Hero() {
     };
   }, []);
 
+  const handleEnded = (which: "a" | "b") => {
+    // Crossfade only triggers from the currently-active video.
+    setSlots((prev) => {
+      if (!prev || prev.active !== which) return prev;
+      return { ...prev, active: which === "a" ? "b" : "a" };
+    });
+    // After the fade-out finishes, swap the just-finished slot to the next-up clip
+    // so it's ready to play when its turn comes again. Reloading mid-fade would
+    // cut the visible fade-out short.
+    window.setTimeout(() => {
+      const order = orderRef.current;
+      cursor.current = (cursor.current + 1) % order.length;
+      const follow = order[(cursor.current + 1) % order.length];
+      setSlots((prev) => {
+        if (!prev) return prev;
+        return which === "a" ? { ...prev, a: follow } : { ...prev, b: follow };
+      });
+    }, FADE_MS + 100);
+  };
+
   const sp = SPECIES[speciesIdx];
 
   return (
-    <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-[#03091a]">
+      {slots && (
+        <>
+          <video
+            ref={refA}
+            src={slots.a.src}
+            poster={slots.a.poster}
+            muted
+            playsInline
+            preload="auto"
+            onEnded={() => handleEnded("a")}
+            style={{ transitionDuration: `${FADE_MS}ms` }}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity ease-in-out ${
+              slots.active === "a" ? "opacity-100" : "opacity-0"
+            }`}
+            aria-hidden
+          />
+          <video
+            ref={refB}
+            src={slots.b.src}
+            poster={slots.b.poster}
+            muted
+            playsInline
+            preload="auto"
+            onEnded={() => handleEnded("b")}
+            style={{ transitionDuration: `${FADE_MS}ms` }}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity ease-in-out ${
+              slots.active === "b" ? "opacity-100" : "opacity-0"
+            }`}
+            aria-hidden
+          />
+        </>
+      )}
+
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(3,9,26,0.45) 0%, rgba(3,9,26,0.55) 55%, rgba(3,9,26,0.85) 100%)",
+        }}
+        aria-hidden
+      />
+      <div
+        className="absolute inset-0 pointer-events-none mix-blend-screen"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 50% 30%, rgba(78,205,196,0.10), transparent 60%), radial-gradient(40% 40% at 70% 80%, rgba(167,139,250,0.08), transparent 70%), radial-gradient(50% 60% at 20% 90%, rgba(248,113,113,0.05), transparent 70%)",
+        }}
+        aria-hidden
+      />
+
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none"
         aria-hidden
       />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(60% 50% at 50% 30%, rgba(78,205,196,0.12), transparent 60%), radial-gradient(40% 40% at 70% 80%, rgba(167,139,250,0.10), transparent 70%), radial-gradient(50% 60% at 20% 90%, rgba(248,113,113,0.06), transparent 70%)",
-        }}
-        aria-hidden
-      />
-
-      <div
-        key={sp.id}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none animate-drift"
-        aria-hidden
-      >
-        <div className="w-[80vw] max-w-[1100px] opacity-[0.16] mix-blend-screen">
-          <WhaleImage kind={sp.kind} className="w-full h-auto" />
-        </div>
-      </div>
 
       <div className="relative z-10 text-center px-6 max-w-4xl">
         <div className="font-display text-[12px] uppercase tracking-[0.4em] text-ink-muted mb-6">
           Whale Resilience
         </div>
-        <h1 className="font-display text-[clamp(2.4rem,6.5vw,5.2rem)] leading-[1.05] font-medium text-ink-primary mb-6">
+        <h1 className="font-display text-[clamp(2.4rem,6.5vw,5.2rem)] leading-[1.05] font-medium text-ink-primary mb-6 [text-shadow:0_2px_24px_rgba(0,0,0,0.55)]">
           They were hunted to the edge.
           <br />
           <span
@@ -113,7 +229,7 @@ export default function Hero() {
             They came back.
           </span>
         </h1>
-        <p className="text-[clamp(1rem,1.6vw,1.25rem)] text-ink-secondary max-w-2xl mx-auto leading-relaxed">
+        <p className="text-[clamp(1rem,1.6vw,1.25rem)] text-ink-secondary max-w-2xl mx-auto leading-relaxed [text-shadow:0_1px_18px_rgba(0,0,0,0.55)]">
           Explore 120 years of whale population data — a story of destruction,
           protection, and slow, stubborn resilience.
         </p>
@@ -132,7 +248,7 @@ export default function Hero() {
 
       <a
         href="#trends"
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-ink-muted hover:text-ink-primary transition-colors text-[11px] tracking-[0.25em] uppercase flex flex-col items-center gap-2 group"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-ink-muted hover:text-ink-primary transition-colors text-[11px] tracking-[0.25em] uppercase flex flex-col items-center gap-2 group z-10"
       >
         <span>Dive in</span>
         <span className="block w-px h-10 bg-gradient-to-b from-ink-muted to-transparent group-hover:from-ink-primary transition-colors" />
