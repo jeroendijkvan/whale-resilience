@@ -54,30 +54,45 @@ export default function Hero() {
     return () => clearInterval(id);
   }, []);
 
-  // Whenever the active slot changes, play that one from the start.
-  // The just-finished video stays visible at its last frame and fades out.
-  useEffect(() => {
-    if (!slots) return;
-    const el = slots.active === "a" ? refA.current : refB.current;
-    if (el) {
-      try {
-        el.currentTime = 0;
-      } catch {
-        /* metadata may not be ready on first render; play() will still start */
-      }
-      el.play().catch(() => {
-        /* autoplay may be blocked — poster still shows */
-      });
-    }
-  }, [slots?.active]);
-
-  // When a slot's src is swapped (always while hidden), reload the element.
+  // Load effects must come BEFORE the play effect so initial-mount ordering is
+  // load → play. If play ran first the subsequent load() would reset the element
+  // and cancel playback.
   useEffect(() => {
     refA.current?.load();
   }, [slots?.a.src]);
   useEffect(() => {
     refB.current?.load();
   }, [slots?.b.src]);
+
+  // Start the active video. Depending on the active src (not just `active`) lets
+  // the effect refire on initial mount when slots go from null → defined.
+  const activeSrc = slots
+    ? slots.active === "a"
+      ? slots.a.src
+      : slots.b.src
+    : undefined;
+  useEffect(() => {
+    if (!slots || !activeSrc) return;
+    const el = slots.active === "a" ? refA.current : refB.current;
+    if (!el) return;
+    const attemptPlay = () => {
+      el.play().catch(() => {
+        /* autoplay may be blocked — poster still shows */
+      });
+    };
+    // load() is async — wait for enough data before play() so the browser
+    // doesn't drop the play call on a not-yet-ready element.
+    if (el.readyState >= 2 /* HAVE_CURRENT_DATA */) {
+      attemptPlay();
+    } else {
+      const onReady = () => {
+        el.removeEventListener("loadeddata", onReady);
+        attemptPlay();
+      };
+      el.addEventListener("loadeddata", onReady);
+      return () => el.removeEventListener("loadeddata", onReady);
+    }
+  }, [activeSrc]);
 
   // Ambient particles, drifting across the surface.
   useEffect(() => {
